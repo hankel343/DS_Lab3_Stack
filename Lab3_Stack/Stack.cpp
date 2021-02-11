@@ -1,6 +1,7 @@
 #include "Stack.h"
 #include "ItemType.h"
-#include <new>
+#include <iostream>
+#include <new> //This library is included to use bad_alloc exception.
 
 Stack::Stack() {};
 
@@ -24,30 +25,69 @@ bool Stack::IsFull()
 
 void Stack::Push(ItemType iNewItem)
 {
-	Node* iTemp = new Node;
-	iTemp->iData = iNewItem;
+	try
+	{
+		if (this->IsFull()) //If IsFull is called on current object and the method returns true
+			throw FullStack();
 
-	if (iTop == nullptr) { //If list was empty.
-		iTemp->iNext = nullptr;
-		iTop = iTemp; //Making top point to first node.
-	} else {
-		iTemp->iNext = iTop; //Making link to previous top node.
-		iTop = iTemp; //Moving top to most recently inserted item.
+		Node* iTemp = new Node;
+		iTemp->iData = iNewItem;
+
+		if (iTop == nullptr) { //If list was empty.
+			iTemp->iNext = nullptr;
+			iTop = iTemp; //Making top point to first node.
+		}
+		else {
+			iTemp->iNext = iTop; //Making link to previous top node.
+			iTop = iTemp; //Moving top to most recently inserted item.
+		}
+
+		std::cout << iTemp->iData.Get() << " was added to the stack.\n\n";
+	} catch (FullStack overflow) {
+		std::cerr << "===============================================================\n";
+		std::cerr << "Exception: Bad memory allocation caught - the stack is full!\n";
+		std::cerr << "===============================================================\n\n";
 	}
+	
 }
 
 void Stack::Pop()
 {
-	Node* iTemp = iTop;
-	iTop = iTop->iNext; //Moves top to next item in the list.
-	delete iTemp; //Deallocates memory for node to be deleted.
+	try
+	{
+		if (IsEmpty())
+			throw EmptyStack();
+		else
+		{
+			Node* iTemp = iTop;
+			iTop = iTop->iNext; //Moves top to next item in the list.
+			delete iTemp; //Deallocates memory for node to be deleted.
+			std::cout << "The top element has been removed from the stack.\n\n";
+		}
+	} catch (EmptyStack underflow) {
+		std::cerr << "===============================================\n";
+		std::cerr << "Exception thrown: The stack is currently empty.\n";
+		std::cerr << "===============================================\n\n";
+	}
+	
+
+	
 }
 
-ItemType Stack::Top()
+void Stack::Top()
 {
-	//Client is reponsible for calling IsEmpty() before this function
-	//to prevent stack underflow.
-	return iTop->iData;
+	try
+	{
+		if (this->IsEmpty())
+			throw EmptyStack();
+
+		std::cout << iTop->iData.Get() << " is at the top of the stack.\n\n";
+	} catch (EmptyStack underflow) {
+		std::cerr << "===============================================\n";
+		std::cerr << "Exception thrown: The stack is currently empty.\n";
+		std::cerr << "===============================================\n\n";
+		
+	}
 }
 
 Stack::~Stack()

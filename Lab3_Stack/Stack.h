@@ -41,7 +41,7 @@ public:
 	//Pre: Stack object exists and the stack is not empty.
 	//Post: The top most item is removed from the stack (and not returned).
 
-	ItemType Top();
+	void Top();
 	//Pre: A stack object exists and client has verified stack is not empty.
 	//Post: A copy of the item on the top of the stack is returned (and not removed).
 

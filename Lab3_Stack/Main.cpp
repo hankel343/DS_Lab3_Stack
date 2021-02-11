@@ -20,14 +20,6 @@ void PushCase(Stack &StackObj);
 //Pre: A stack object exists and is passed to the function.
 //Post: An element is pushed on to the stack.
 
-void PopCase(Stack &StackObj);
-//Pre: A stack object exists and is passed to the function.
-//Post: The top element of the stack is popped.
-
-void TopCase(Stack &StackObj);
-//Pre: A stack object exists and is passed to the function.
-//Post: A copy of the top element of the stack is displayed to the user.
-
 int main()
 {
 	Stack StackObj;
@@ -64,11 +56,11 @@ void ProcessSelection(char selection, Stack &StackObj)
 		break;
 
 	case '2':
-		PopCase(StackObj);
+		StackObj.Pop();
 		break;
 	
 	case '3':
-		TopCase(StackObj);
+		StackObj.Top();
 		break;
 
 	case 'Q':
@@ -94,41 +86,6 @@ void PushCase(Stack &StackObj)
 	}
 	iNewItem.Set(nNewData);
 
-	try 
-	{
-		if (StackObj.IsFull()) {
-			throw FullStack();
-		}
-		StackObj.Push(iNewItem);
-	} catch(FullStack) {
-		cerr << "===============================================================\n";
-		cerr << "Exception: Bad memory allocation caught - the stack is full!\n";
-		cerr << "===============================================================\n\n";
-	}
-	
-	cout << nNewData << " has been added to the stack.\n";
+	StackObj.Push(iNewItem);
 }
 
-void PopCase(Stack &StackObj)
-{
-	try
-	{
-		if (StackObj.IsEmpty())
-			throw EmptyStack();
-		StackObj.Pop();
-		cout << "The top top element has been removed from the stack.\n\n";
-	}
-	catch (EmptyStack) {
-		cerr << "===============================================\n";
-		cerr << "Exception thrown: The stack is currently empty.\n";
-		cerr << "===============================================\n\n";
-	}
-}
-
-void TopCase(Stack &StackObj)
-{
-	if (StackObj.IsEmpty() == false)
-		cout << StackObj.Top().Get() << endl;
-	else
-		cout << "The stack is currently empty.\n";
-}
