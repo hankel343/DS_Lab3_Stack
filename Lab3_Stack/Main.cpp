@@ -6,8 +6,6 @@
  */
 
 #include "Stack.h"
-#include "ItemType.h"
-
 #include <iostream>
 
 using namespace std;
@@ -52,15 +50,43 @@ void ProcessSelection(char selection, Stack &StackObj)
 	switch (toupper(selection))
 	{
 	case '1':
-		PushCase(StackObj);
+		try 
+		{
+			PushCase(StackObj);
+		} 
+		catch (FullStack overflow) 
+		{
+			std::cerr << "===============================================================\n";
+			std::cerr << "Exception: Bad memory allocation caught - the stack is full!\n";
+			std::cerr << "===============================================================\n\n";
+		}
 		break;
 
 	case '2':
-		StackObj.Pop();
+		try
+		{
+			StackObj.Pop();
+			cout << "The top most element has been removed from the stack.\n\n";
+		}
+		catch (EmptyStack underflow) 
+		{
+			std::cerr << "===============================================\n";
+			std::cerr << "Exception thrown: The stack is currently empty.\n";
+			std::cerr << "===============================================\n\n";
+		}
 		break;
 	
 	case '3':
-		StackObj.Top();
+		try
+		{
+			cout << StackObj.Top().Get() << " is the element at the top of the list\n\n";
+		}
+		catch (EmptyStack underflow) 
+		{
+			std::cerr << "===============================================\n";
+			std::cerr << "Exception thrown: The stack is currently empty.\n";
+			std::cerr << "===============================================\n\n";
+		}
 		break;
 
 	case 'Q':
@@ -87,5 +113,7 @@ void PushCase(Stack &StackObj)
 	iNewItem.Set(nNewData);
 
 	StackObj.Push(iNewItem);
+	system("cls");
+	cout << "There is a new top most element on the stack.\n\n";
 }
 
