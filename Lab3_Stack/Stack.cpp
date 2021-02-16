@@ -96,7 +96,7 @@ Stack::~Stack()
 		Node* pTemp = pTop;
 		Node* pTempTrailer = NULL;
 
-		while (pTemp != NULL)
+		while (pTop != NULL)
 		{
 			pTempTrailer = pTop;
 			pTop = pTop->pNext;
