@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void ProcessSelection(char selection, Stack &StackObj);
+void ProcessSelection(char cSelection, Stack &StackObj);
 //Pre: Stack object exists and user has provided valid input.
 //Post: The appropriate operation is performed on the stack.
 
@@ -22,7 +22,7 @@ int main()
 {
 	Stack StackObj;
 
-	char selection;
+	char cSelection;
 	cout << "This program allows you to perform operations on a stack ADT implemented as a linked list.\n";
 	do
 	{
@@ -31,23 +31,23 @@ int main()
 		cout << "2 - Pop and item from the top of the stack.\n";
 		cout << "3 - Return a copy of the element at the top of the stack.\n";
 		cout << "Q - Quit.\n";
-		cout << "Selection: ";
+		cout << "cSelection: ";
 
-		cin >> selection;
+		cin >> cSelection;
 
-		ProcessSelection(selection, StackObj);
+		ProcessSelection(cSelection, StackObj);
 
-	} while (toupper(selection) != 'Q');
+	} while (toupper(cSelection) != 'Q');
 
 	cout << "Goodbye...\n";
 
 	return 0;
 }
 
-void ProcessSelection(char selection, Stack &StackObj)
+void ProcessSelection(char cSelection, Stack &StackObj)
 {
 	system("cls");
-	switch (toupper(selection))
+	switch (toupper(cSelection))
 	{
 	case '1':
 		try 
